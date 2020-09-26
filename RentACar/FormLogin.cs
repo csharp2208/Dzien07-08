@@ -1,6 +1,9 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using RentACar.Utils;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -25,6 +28,30 @@ namespace RentACar
         private void btnLogin_Click(object sender, EventArgs e)
         {
             // połączenie z bazą
+            String cs = ConfigurationManager.AppSettings["cs"];
+            try
+            {
+                if (String.IsNullOrWhiteSpace(tbLogin.Text) ||
+                    String.IsNullOrWhiteSpace(tbPassword.Text))
+                {
+                    DialogHelper.E("Podaj dane do logowania");
+                    return;
+                }
+
+                cs = String.Format(cs, tbLogin.Text.Trim(), tbPassword.Text.Trim());
+                GlobalData.connection = new MySqlConnection(cs);
+                GlobalData.connection.Open();
+
+                DialogResult = DialogResult.OK;
+
+                Close();
+
+            } catch (Exception exc)
+            {
+                DialogHelper.E(exc.Message);
+            }
+
+
         }
     }
 }

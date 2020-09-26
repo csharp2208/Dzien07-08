@@ -97,6 +97,7 @@
             this.listaSamochodówToolStripMenuItem.Name = "listaSamochodówToolStripMenuItem";
             this.listaSamochodówToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.listaSamochodówToolStripMenuItem.Text = "Lista samochodów";
+            this.listaSamochodówToolStripMenuItem.Click += new System.EventHandler(this.listaSamochodówToolStripMenuItem_Click);
             // 
             // statusStrip1
             // 
@@ -126,6 +127,7 @@
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Rent A Car";
+            this.Load += new System.EventHandler(this.FormMain_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
