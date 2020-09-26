@@ -51,6 +51,7 @@
             this.tbLogin.Name = "tbLogin";
             this.tbLogin.Size = new System.Drawing.Size(195, 20);
             this.tbLogin.TabIndex = 1;
+            this.tbLogin.Text = "root";
             // 
             // tbPassword
             // 
@@ -59,6 +60,7 @@
             this.tbPassword.PasswordChar = '*';
             this.tbPassword.Size = new System.Drawing.Size(195, 20);
             this.tbPassword.TabIndex = 3;
+            this.tbPassword.Text = "root";
             // 
             // label2
             // 
