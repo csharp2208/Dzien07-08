@@ -116,5 +116,28 @@ namespace RentACar
                 cbModels.SelectedIndex = -1;
             }
         }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            if (!ValidateData())
+            {
+                DialogHelper.E("Sprawdź pola formularza");
+                return;
+            }
+            // zapis do bazy
+        }
+
+        private bool ValidateData()
+        {
+            if (cbModels.SelectedIndex>-1 && cbTypes.SelectedIndex>-1 &&
+                cbFuel.SelectedIndex>-1 && 
+                tbRegPlate.Text.Replace(" ","").Length>=3 )
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        }
     }
 }
