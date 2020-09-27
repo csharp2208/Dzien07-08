@@ -136,7 +136,44 @@ namespace RentACar
         private void AddNewCar()
         {
             FormAddCar form = new FormAddCar();
-            form.ShowDialog();
+            if (form.ShowDialog()==DialogResult.OK)
+            {
+                //odswież dane
+                RefreshData();
+            }
+        }
+
+        private void mnuEdit_Click(object sender, EventArgs e)
+        {
+            if (grid.SelectedRows.Count == 0) return;
+            int selectedIndex = grid.SelectedRows[0].Index;
+            int rowId = Convert.ToInt32(grid["id", selectedIndex].Value);
+            
+            FormAddCar form = new FormAddCar();
+            form.RowId = rowId;
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                //odswież dane
+                RefreshData();
+            }
+        }
+
+        private void mnuOper_Click(object sender, EventArgs e)
+        {
+            if (grid.SelectedRows.Count == 0) return;
+            int selectedIndex = grid.SelectedRows[0].Index;
+            int rowId = Convert.ToInt32(grid["id", selectedIndex].Value);
+            int avail = Convert.ToInt32(grid["avail", selectedIndex].Value);
+            String regPlate = grid["registration_plate", selectedIndex].Value.ToString(); ;
+
+            FormOperation form = new FormOperation();
+            form.RowId = rowId;
+            form.OperBack = (avail == 0);
+            form.RegPlate = regPlate;
+            if (form.ShowDialog()==DialogResult.OK)
+            {
+                RefreshData();
+            }
         }
     }
 }

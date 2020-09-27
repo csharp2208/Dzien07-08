@@ -41,6 +41,9 @@
             this.mnuDeleteCar = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuRefresh = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuEdit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuOper = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -117,32 +120,55 @@
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuOper,
+            this.toolStripSeparator2,
             this.mnuDeleteCar,
+            this.mnuEdit,
             this.toolStripMenuItem1,
             this.mnuRefresh});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(163, 54);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(181, 126);
             // 
             // mnuDeleteCar
             // 
             this.mnuDeleteCar.Name = "mnuDeleteCar";
             this.mnuDeleteCar.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.mnuDeleteCar.Size = new System.Drawing.Size(162, 22);
+            this.mnuDeleteCar.Size = new System.Drawing.Size(180, 22);
             this.mnuDeleteCar.Text = "Usuń rekord";
             this.mnuDeleteCar.Click += new System.EventHandler(this.mnuDeleteCar_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(159, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
             // 
             // mnuRefresh
             // 
             this.mnuRefresh.Name = "mnuRefresh";
             this.mnuRefresh.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.mnuRefresh.Size = new System.Drawing.Size(162, 22);
+            this.mnuRefresh.Size = new System.Drawing.Size(180, 22);
             this.mnuRefresh.Text = "Odśwież";
             this.mnuRefresh.Click += new System.EventHandler(this.mnuRefresh_Click);
+            // 
+            // mnuEdit
+            // 
+            this.mnuEdit.Name = "mnuEdit";
+            this.mnuEdit.ShortcutKeys = System.Windows.Forms.Keys.F4;
+            this.mnuEdit.Size = new System.Drawing.Size(180, 22);
+            this.mnuEdit.Text = "Edycja rekordu";
+            this.mnuEdit.Click += new System.EventHandler(this.mnuEdit_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
+            // 
+            // mnuOper
+            // 
+            this.mnuOper.Name = "mnuOper";
+            this.mnuOper.Size = new System.Drawing.Size(180, 22);
+            this.mnuOper.Text = "Wydaj / Przyjmij";
+            this.mnuOper.Click += new System.EventHandler(this.mnuOper_Click);
             // 
             // FormCarList
             // 
@@ -176,5 +202,8 @@
         private System.Windows.Forms.ToolStripMenuItem mnuDeleteCar;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem mnuRefresh;
+        private System.Windows.Forms.ToolStripMenuItem mnuEdit;
+        private System.Windows.Forms.ToolStripMenuItem mnuOper;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
     }
 }

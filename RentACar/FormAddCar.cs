@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,11 +52,57 @@ namespace RentACar
         private void FormAddCar_Load(object sender, EventArgs e)
         {
             LoadDictionaryData();
+            if (RowId>0)
+            {
+                //odczytaj rekord o podanym RowId i ustawić wartości w kontrolkach
+                String sql = @"SELECT c.* , m.brand_id FROM 
+                        cars AS c, car_models AS m
+                        WHERE c.id={0} AND c.model_id = m.id 
+                        ";
+                sql = String.Format(sql, RowId);
+                MySqlCommand cmd = new MySqlCommand(sql, GlobalData.connection);
+                MySqlDataReader reader = cmd.ExecuteReader();
+                if (reader.HasRows)
+                {
+                    reader.Read();
+                    numEngine.Value = Convert.ToInt32( reader["engine"] );
+                    numYear.Value = Convert.ToInt32( reader["manufacturer_year"] );
+                    tbRegPlate.Text = reader["registration_plate"].ToString();
+                    cbFuel.SelectedIndex = cbFuel.Items.IndexOf(reader["fuel"]);
+
+                    cbBrands.SelectedValue = reader["brand_id"];
+                    cbModels.SelectedValue = reader["model_id"];
+                    cbTypes.SelectedValue = reader["type_id"];
+
+                    cbModels.Enabled = true;
+                    if (!(reader["image"] is DBNull))
+                    {
+                        byte[] b = (byte[])reader["image"];
+                        if (b!=null && b.Length>0)
+                        {
+                            using (MemoryStream ms = new MemoryStream(b))
+                            {
+                                picCar.Image = Image.FromStream(ms);
+                            }
+                        }
+                    }
+
+                    reader.Close();
+                }
+                btnOK.Text = "AKTUALIZUJ";
+                this.Text = "Edytuj samochód";
+            } else
+            {
+                btnOK.Text = "ZAPISZ";
+                this.Text = "Dodaj nowy samochód";
+            }
         }
 
         BindingSource bsBrands = new BindingSource();
         BindingSource bsModels = new BindingSource();
         BindingSource bsTypes = new BindingSource();
+
+        public int RowId { get; set; } = 0;
 
         private void LoadDictionaryData()
         {
@@ -125,6 +172,63 @@ namespace RentACar
                 return;
             }
             // zapis do bazy
+            SaveData();
+        }
+
+        private void SaveData()
+        {
+            try
+            {
+                String sql;
+                if (RowId > 0)
+                {
+                    sql = @"UPDATE cars SET
+                    model_id=@model_id, type_id=@type_id, registration_plate=@plate,
+                    engine= @engine, manufacturer_year = @year, 
+                    image = @image, fuel = @fuel
+                    WHERE id = @row_id";
+                }
+                else { 
+                    sql = @"INSERT INTO cars
+                 (model_id, type_id, registration_plate, engine, manufacturer_year, avail, image, fuel  )
+                 VALUES
+                 (@model_id ,@type_id, @plate, @engine, @year , 1 , @image, @fuel )";
+                }
+
+                MySqlCommand cmd = new MySqlCommand(sql, GlobalData.connection);
+                cmd.Parameters.Add("@model_id", MySqlDbType.Int32);
+                cmd.Parameters.Add("@type_id", MySqlDbType.Int32);
+                cmd.Parameters.Add("@plate", MySqlDbType.VarChar, 50);
+                cmd.Parameters.Add("@engine", MySqlDbType.Int32);
+                cmd.Parameters.Add("@year", MySqlDbType.Int32);
+                cmd.Parameters.Add("@image", MySqlDbType.MediumBlob);
+                cmd.Parameters.Add("@fuel", MySqlDbType.VarChar, 5);
+                cmd.Parameters.Add("@row_id", MySqlDbType.Int32);
+
+                cmd.Parameters["@model_id"].Value = cbModels.SelectedValue;
+                cmd.Parameters["@type_id"].Value = cbTypes.SelectedValue;
+                cmd.Parameters["@plate"].Value = tbRegPlate.Text.Replace(" ", "");
+                cmd.Parameters["@engine"].Value = numEngine.Value;
+                cmd.Parameters["@year"].Value = numYear.Value;
+                cmd.Parameters["@fuel"].Value = cbFuel.SelectedItem;
+                cmd.Parameters["@row_id"].Value = RowId;
+
+                if (pictureFileName!=null && File.Exists(pictureFileName))
+                {
+                    cmd.Parameters["@image"].Value = File.ReadAllBytes(pictureFileName);
+                } else
+                {
+                    cmd.Parameters["@image"].Value = null;
+                }
+                cmd.ExecuteNonQuery();
+
+                DialogResult = DialogResult.OK;
+                Close();
+
+            } catch (Exception exc)
+            {
+                DialogHelper.E(exc.Message);
+            }
         }
 
         private bool ValidateData()
