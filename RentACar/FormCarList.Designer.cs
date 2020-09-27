@@ -70,6 +70,7 @@
             // 
             this.tbFind.Name = "tbFind";
             this.tbFind.Size = new System.Drawing.Size(100, 25);
+            this.tbFind.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbFind_KeyPress);
             // 
             // toolStripSeparator1
             // 
@@ -127,6 +128,7 @@
             this.mnuDeleteCar.ShortcutKeys = System.Windows.Forms.Keys.Delete;
             this.mnuDeleteCar.Size = new System.Drawing.Size(180, 22);
             this.mnuDeleteCar.Text = "Usuń rekord";
+            this.mnuDeleteCar.Click += new System.EventHandler(this.mnuDeleteCar_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -149,7 +151,7 @@
             this.Controls.Add(this.grid);
             this.Controls.Add(this.toolStrip1);
             this.Name = "FormCarList";
-            this.Text = "FormCarList";
+            this.Text = "Lista samochodów";
             this.Load += new System.EventHandler(this.FormCarList_Load);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();

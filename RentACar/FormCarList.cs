@@ -80,5 +80,52 @@ namespace RentACar
         {
             RefreshData();
         }
+
+        private void mnuDeleteCar_Click(object sender, EventArgs e)
+        {
+            if (grid.SelectedRows.Count == 0) return;
+
+            DialogResult result = MessageBox.Show("Czy usunąć rekord?", "Pytanie",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (result != DialogResult.Yes) return;
+            
+            String sql = " DELETE FROM cars WHERE id = @rowID ";
+
+            int selectedIndex = grid.SelectedRows[0].Index;
+            int rowID = Convert.ToInt32(grid["id", selectedIndex].Value);
+
+            using (MySqlCommand deleteCommand = new MySqlCommand(sql, GlobalData.connection))
+            {
+                deleteCommand.Parameters.Add("@rowID", MySqlDbType.Int32);
+                deleteCommand.Parameters["@rowID"].Value = rowID;
+                deleteCommand.ExecuteNonQuery();
+            }
+            
+            grid.Rows.RemoveAt(selectedIndex);
+
+        }
+
+        private void tbFind_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar==(char)13)
+            {
+                // szukaj
+                String s = tbFind.Text.Trim().ToUpper();
+                if (String.IsNullOrEmpty(s))
+                {
+                    bSource.Filter = null;
+                }
+                else
+                {
+                    bSource.Filter = $" registration_plate LIKE '%{s}%' ";
+                    if (bSource.Count == 0)
+                    {
+                        DialogHelper.I("Brak wyników dla podanego filtru");
+                        bSource.RemoveFilter();
+                    }
+                }
+                grid.DataSource = bSource;
+            }
+        }
     }
 }
