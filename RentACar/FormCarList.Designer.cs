@@ -85,6 +85,7 @@
             this.btnInsert.Name = "btnInsert";
             this.btnInsert.Size = new System.Drawing.Size(23, 22);
             this.btnInsert.Text = "toolStripButton1";
+            this.btnInsert.Click += new System.EventHandler(this.btnInsert_Click);
             // 
             // btnRefresh
             // 
@@ -126,20 +127,20 @@
             // 
             this.mnuDeleteCar.Name = "mnuDeleteCar";
             this.mnuDeleteCar.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.mnuDeleteCar.Size = new System.Drawing.Size(180, 22);
+            this.mnuDeleteCar.Size = new System.Drawing.Size(162, 22);
             this.mnuDeleteCar.Text = "Usuń rekord";
             this.mnuDeleteCar.Click += new System.EventHandler(this.mnuDeleteCar_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(159, 6);
             // 
             // mnuRefresh
             // 
             this.mnuRefresh.Name = "mnuRefresh";
             this.mnuRefresh.ShortcutKeys = System.Windows.Forms.Keys.F5;
-            this.mnuRefresh.Size = new System.Drawing.Size(180, 22);
+            this.mnuRefresh.Size = new System.Drawing.Size(162, 22);
             this.mnuRefresh.Text = "Odśwież";
             this.mnuRefresh.Click += new System.EventHandler(this.mnuRefresh_Click);
             // 

@@ -127,5 +127,16 @@ namespace RentACar
                 grid.DataSource = bSource;
             }
         }
+
+        private void btnInsert_Click(object sender, EventArgs e)
+        {
+            AddNewCar();
+        }
+
+        private void AddNewCar()
+        {
+            FormAddCar form = new FormAddCar();
+            form.ShowDialog();
+        }
     }
 }
